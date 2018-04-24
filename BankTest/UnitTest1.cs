@@ -127,6 +127,26 @@ namespace BankTest
         }
 
         [TestMethod]
+        public void Debit_WhenBalanceisNegative_AccountIsFrozen()
+        {
+            // arrange  
+            double beginningBalance = 7.00;
+            double debitAmount = 5.99;
+            BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
+
+            try
+            {
+                account.Debit(debitAmount);
+            }
+            catch (Exception e)
+            {
+                StringAssert.Contains(e.Message, "Account frozen");
+                return;
+            }
+            Assert.Fail("No exception was thrown.");
+        }
+
+        [TestMethod]
         public void TestMethod1()
         {
         }

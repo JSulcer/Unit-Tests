@@ -40,8 +40,18 @@ namespace BankAccountNS
             get { return m_balance; }
         }
 
+        public bool Frozen
+        {
+            get { return m_frozen; }
+        }
+
         public void Debit(double amount)
         {
+            if (m_balance < 0.00)
+            {
+                FreezeAccount();
+            }
+
             if (m_frozen)
             {
                 throw new Exception("Account frozen");
@@ -57,7 +67,18 @@ namespace BankAccountNS
                 throw new ArgumentOutOfRangeException("amount", amount, DebitAmountLessThanZeroMessage);
             }
 
-            m_balance -= amount + 1.45; 
+            m_balance -= amount;
+            m_balance -= 1.45;
+
+            if (m_balance < 0.00)
+            {
+                FreezeAccount();
+            }
+
+            if (m_frozen)
+            {
+                throw new Exception("Account frozen");
+            }
         }
 
         public void Credit(double amount)
