@@ -75,12 +75,12 @@ namespace BankAccountNS
             m_balance += amount;
         }
 
-        private void FreezeAccount()
+        public void FreezeAccount()
         {
             m_frozen = true;
         }
 
-        private void UnfreezeAccount()
+        public void UnfreezeAccount()
         {
             m_frozen = false;
         }

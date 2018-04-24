@@ -29,7 +29,7 @@ namespace BankTest
         {
             // arrange  
             double beginningBalance = 11.99;
-            double debitAmount = 20.00;
+            double debitAmount = 13.00;
             BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
 
             // act  
@@ -67,11 +67,65 @@ namespace BankTest
             Assert.Fail("No exception was thrown.");
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void Credit_AccountHasBeenFrozen_ShouldThrowArgument()
         {
+            double beginningBalance = 10.00;
+            double creditAmount = 5.00;
+            BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
+            account.FreezeAccount();
 
-        }*/
+            try
+            {
+                account.Credit(creditAmount);
+            }
+            catch (Exception e)
+            {
+                StringAssert.Contains(e.Message, "Account frozen");
+                return;
+            }
+            Assert.Fail("No exception was thrown.");
+        }
+
+        [TestMethod]
+        public void Credit_WhenAmountIsLessThanZero_ShouldThrowArgumentOutOfRange()
+        {
+            // arrange  
+            double beginningBalance = 11.99;
+            double creditAmount = -5.00;
+            BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
+
+            // act  
+            try
+            {
+                account.Credit(creditAmount);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                // assert  
+                StringAssert.Contains(e.Message, "amount");
+                return;
+            }
+            Assert.Fail("No exception was thrown.");
+        }
+
+        [TestMethod]
+        public void Credit_WithValidAmount_UpdatesBalance()
+        {
+            // arrange  
+            double beginningBalance = 11.99;
+            double creditAmount = 3.00;
+            double expected = 14.99;
+            BankAccount account = new BankAccount("Mr. Bryan Walton", beginningBalance);
+
+            // act  
+            account.Credit(creditAmount);
+
+            // assert  
+            double actual = account.Balance;
+            Assert.AreEqual(expected, actual, 0.001, "Account not debited correctly");
+        }
+
         [TestMethod]
         public void TestMethod1()
         {
