@@ -57,7 +57,7 @@ namespace BankAccountNS
                 throw new ArgumentOutOfRangeException("amount", amount, DebitAmountLessThanZeroMessage);
             }
 
-            m_balance -= amount; // intentionally incorrect code
+            m_balance -= amount + 1.45; 
         }
 
         public void Credit(double amount)
